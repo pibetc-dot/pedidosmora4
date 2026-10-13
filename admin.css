@@ -1,0 +1,11 @@
+
+.admin-page .admin-hidden-header,.admin-page main,.admin-page #productModal,.admin-page #cartBtn{display:none!important}
+.admin-page .admin-route-header{display:flex}
+.admin-page #adminModal{display:block;position:relative;inset:auto;opacity:1;visibility:visible;pointer-events:auto;z-index:1;padding:0;overflow:visible}
+.admin-page #adminModal .modal-backdrop,.admin-page #adminModal .modal-close{display:none!important}
+.admin-page #adminModal .modal-card{width:min(1100px,calc(100% - 32px));max-height:none;overflow:visible;margin:26px auto;box-shadow:none;border:1px solid #e4e8e4}
+.admin-page #adminModal .modal-body{padding:clamp(20px,4vw,42px)}
+.admin-page .admin-route-header{padding:16px clamp(16px,4vw,48px)}
+.admin-page .admin-setup-error{padding:20px;border:1px solid #e6c6a5;border-radius:12px;background:#fff8ef;color:#633d1c}
+.admin-page .admin-setup-error p{margin:8px 0}.admin-page .admin-setup-error a{color:#1a5f3f;font-weight:700}
+@media(max-width:600px){.admin-page #adminModal .modal-card{width:100%;margin:0;border-radius:0;border-left:0;border-right:0}.admin-page .admin-route-header .btn{font-size:12px;padding:10px}}

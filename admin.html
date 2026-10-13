@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1a5f3f">
+  <meta name="description" content="Administración privada de Mora Hamburguesas.">
+  <title>Administración — Mora Hamburguesas</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-page">
+<header class="site-header admin-route-header"><a class="brand" href="/pedir" aria-label="Ir a la tienda pública"><div class="brand-mark">M</div><div class="brand-text"><strong>MORA</strong><span>ADMINISTRACIÓN</span></div></a><a class="btn btn-outline" href="/pedir">Ver tienda pública ↗</a></header><header class="site-header admin-hidden-header">
+  <a class="brand" href="#inicio" aria-label="Mora Hamburguesas, inicio">
+    <div class="brand-mark">M</div>
+    <div class="brand-text"><strong>MORA</strong><span>HAMBURGUESAS · DESDE 2022</span></div>
+  </a>
+  <div class="header-actions">
+    <button id="adminBtn" class="icon-btn ghost" type="button" title="Editor">⚙️</button>
+    <button id="cartBtn" class="cart-btn" type="button" hidden>🛒 <span>Carrito</span><b id="cartCount">0</b></button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <p class="eyebrow">PEDIDOS ONLINE</p>
+    <h1>Hamburguesas hechas<br><em>para disfrutar.</em></h1>
+    <p>Elegí, personalizá y mandanos tu pedido por WhatsApp.</p>
+    <button id="menuCta" class="btn btn-light" type="button">Ver menú ↓</button>
+  </div>
+</section>
+
+<section class="trust-strip">
+  <div><span>🔥</span><strong>Hechas al momento</strong><small>Siempre frescas</small></div>
+  <div><span>🚴</span><strong>Delivery</strong><small>O retiro por local</small></div>
+  <div><span>💚</span><strong>Mora</strong><small>Desde 2022</small></div>
+</section>
+
+<section class="menu-section" id="menuSection">
+  <div class="section-heading"><div><p class="eyebrow dark">NUESTRO MENÚ</p><h2>Elegí algo rico.</h2></div><p class="section-note">Podés personalizar cada producto antes de agregarlo.</p></div>
+  <div id="categoryTabs" class="category-tabs" role="tablist"></div>
+  <div id="menu" class="product-grid"></div>
+</section>
+
+<section class="order-section" id="checkout">
+  <div class="order-card">
+    <div class="section-heading compact"><div><p class="eyebrow dark">TU PEDIDO</p><h2>Listo para mandar.</h2></div></div>
+    <div id="cart"></div>
+    <div class="summary" id="summary"></div>
+    <div class="customer-form">
+      <div class="form-title">Datos del pedido</div>
+      <div class="form-grid">
+        <label>Nombre<input id="name" autocomplete="name" placeholder="Tu nombre"></label>
+        <label>WhatsApp<input id="phone" autocomplete="tel" inputmode="tel" placeholder="11 1234 5678"></label>
+      </div>
+      <label>¿Cómo querés recibirlo?
+        <select id="fulfillment"></select>
+      </label>
+      <div id="deliveryFields">
+        <div class="form-grid">
+          <label>Dirección<input id="address" autocomplete="street-address" placeholder="Calle y número"></label>
+          <label>Zona de delivery<select id="deliveryZone"></select></label>
+        </div>
+      </div>
+      <label>Forma de pago<select id="payment"></select></label>
+      <label>Notas para Mora<textarea id="notes" placeholder="Ej.: sin cebolla, tocar timbre, etc."></textarea></label>
+    </div>
+    <button id="clearCartBtn" class="btn btn-outline" type="button" hidden>Vaciar carrito</button>
+    <button id="whatsapp" class="btn btn-primary" type="button" disabled>Enviar pedido por WhatsApp</button>
+    <p class="microcopy">Al tocar el botón se abrirá WhatsApp con el pedido listo para enviar.</p>
+  </div>
+</section>
+</main>
+
+<div id="productModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-modal></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" data-close-modal type="button" aria-label="Cerrar">×</button>
+    <div id="modalImage" class="modal-image">🍔</div>
+    <div class="modal-body">
+      <p class="eyebrow dark" id="modalCategory">MORA</p><h3 id="modalTitle"></h3><p id="modalDesc" class="modal-desc"></p>
+      <div id="modalOptions"></div>
+      <div class="modal-bottom"><strong id="modalPrice">$0</strong><button id="modalAdd" class="btn btn-primary" type="button">Agregar al pedido</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="adminModal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close-admin></div>
+  <div class="modal-card admin-card" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <button class="modal-close" data-close-admin type="button" aria-label="Cerrar">×</button>
+    <div class="modal-body">
+      <p class="eyebrow dark">EDITOR</p><h3 id="adminTitle">Configuración de Mora</h3>
+      <div id="adminAuth"></div>
+      <p class="admin-warning">Podés usar el editor en modo local. Si conectás Supabase, los cambios y pedidos se sincronizan entre tus dispositivos y el panel queda protegido por inicio de sesión.</p>
+      <div class="admin-tabs"><button class="active" data-admin-tab="business">Negocio</button><button data-admin-tab="products">Productos</button><button data-admin-tab="zones">Delivery</button><button data-admin-tab="orders">Pedidos</button></div>
+      <div id="adminContent"></div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="cloud.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
